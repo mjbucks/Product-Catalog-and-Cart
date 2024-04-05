@@ -4,3 +4,9 @@
     padding: 10px 0;
     padding-top: 2%;
 }
+
+.centered-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

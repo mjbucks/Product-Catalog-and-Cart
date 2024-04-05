@@ -41,9 +41,13 @@ function App(){
 
     const removeFromCart = (el) => {
         let hardCopy = [...cart];
-        hardCopy = hardCopy.filter((cartItem) => cartItem.id !== el.id);
+        let poop = hardCopy.lastIndexOf(el);
+        if (poop >= 0){
+            hardCopy.splice(poop, 1);
+        }
         setCart(hardCopy);
     };
+    
 
     function howManyofThis(id) {
         let hmot = cart.filter((cartItem) => cartItem.id === id);
@@ -55,11 +59,11 @@ function App(){
         <div class="row border-top border-bottom" key={el.id}>
             <div class="row main align-items-center">
                 <div class="col-2">
-                    <img class="img-fluid" src={el.image} />
+                <img class="img-fluid" src={require(`./product-images/${el.image}`)} alt={el.name} />
                 </div>
                 <div class="col">
-                    <div class="row text-muted">{el.title}</div>
-                    <div class="row">{el.category}</div>
+                    <div class="row text-muted">{el.name}</div>
+                    <div class="row">{el.description}</div>
                 </div>
                 <div class="col">
                     <button type="button" variant="light" onClick={() => removeFromCart(el)} > - </button>{" "}
@@ -81,6 +85,32 @@ function App(){
 
         return (
             <div>
+                <div class="card">
+                    <div class="row">
+                    {/* HERE, IT IS THE SHOPING CART */}
+                        <div class="col-md-8 cart">
+                            <div class="title">
+                                <div class="row">
+                                    <div class="col">
+                                        <h4>
+                                        <b>Products for Sale:</b>
+                                        </h4>
+                                    </div>
+                                    <div class="col align-self-center text-right text-muted">
+                                    Products selected {cart.length}
+                                    </div>
+                                </div>
+                            </div>
+                            <div>{listItems}</div>
+                            </div>
+                            <div class ="float-end">
+                            <p class ="mb-0 me-5 d-flex align-items-center">
+                                <span class ="small text-muted me-2">Order total:</span>
+                                <span class ="lead fw-normal">${cartTotal}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 <button type="button" className="btn btn-secondary" onClick={() => onSubmit()} > Checkout </button>
             </div>
         );
