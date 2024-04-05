@@ -49,8 +49,8 @@ function App(){
         setCart(hardCopy);
     };
 
-    const handleSearchChange = (value) => {
-        setSearchTerm(value);
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
     };
     
     const filteredProducts = products.filter((product) =>
@@ -192,11 +192,12 @@ function App(){
                     <h1 style={{textAlign: "center", paddingTop: "1%"}}>Welcome to Friends and Food </h1>
                     <h3 style={{textAlign:"center"}}>Shop and buy the best friends and food on the market! </h3>
                     <input
+                        key="searchInput"
                         style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
                         type="text"
                         placeholder="Search..."
                         value={searchTerm}
-                        onChange={(event) => handleSearchChange(event.target.value)}
+                        onChange={handleSearchChange}
                     />
                 </section>
             </div>
@@ -205,7 +206,7 @@ function App(){
 
     return (
         <div>
-        <Header/>
+        {Header()}
         {viewer === 0 ? <Browse/> : viewer === 1 ? <Cart /> : <Summary />}
         </div>
         );
