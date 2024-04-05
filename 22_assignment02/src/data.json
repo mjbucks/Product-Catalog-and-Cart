@@ -1,5 +1,5 @@
 {
-    "friends": [
+    "products": [
         {
         "name": "Shabazz",
         "description": "Shabazz is the greatest companion one could ask for. He loves to play with you, and will climb a tree faster than you can say \"Lemur\"!",
@@ -23,6 +23,30 @@
             "description": "Dory is a blue tang caught in the Atlantic Ocean. She is very sweet, but struggles with memory problems.",
             "price": 5.26,
             "image": "./pets-names/dory.jpg"
+        },
+        {
+            "name": "Bread",
+            "description": "Dory loves this snack. You can also use this for sandwiches.",
+            "price": 2.99,
+            "image": "./food/bread.jpg"
+        },
+        {
+            "name": "Eggs",
+            "description": "Eggs are used year round, perfect for breakfast, baking, or frying. Eggs should be in your fridge year round due to their multiple purposes.",
+            "price": 3.99,
+            "image": "./food/eggs.jpg"
+        },
+        {
+            "name": "Muffin",
+            "description": "Eggs are used year round, perfect for breakfast, baking, or frying. Eggs should be in your fridge year round due to their multiple purposes.",
+            "price": 0.99,
+            "image": "./food/muffin.jpg"
+        },
+        {
+            "name": "Cereal",
+            "description": "Cereal is a good way to start your day. Milk and cereal commonly go together.",
+            "price": 3.59,
+            "image": "./food/cereal.jpg"
         }
     ]
 }
