@@ -1,48 +1,56 @@
 {
     "products": [
         {
-        "name": "Shabazz",
-        "description": "Shabazz is the greatest companion one could ask for. He loves to play with you, and will climb a tree faster than you can say \"Lemur\"!",
-        "price": 1450.23,
-        "image": "./pets-names/shabazz.jpg"
+            "id":0,
+            "name": "Shabazz",
+            "description": "Shabazz is the greatest companion one could ask for. He loves to play with you, and will climb a tree faster than you can say \"Lemur\"!",
+            "price": 1450.23,
+            "image": "./pets-names/shabazz.jpg"
         },
         {
+            "id":1,
             "name": "Patrick",
             "description": "Patrick is a starfish caught in the shallow reefs near Australia. He is a very social star, and will sometimes wear green pants.",
             "price": 0.23,
             "image": "./pets-names/patrick.jpg"
         },
         {
+            "id":2,
             "name": "Igor",
             "description": "Igor is an Elephant from the great land of Kenya. He loves to swim, and will show you how if you don't already know!",
             "price": 82796.99,
             "image": "./pets-names/igot.jpg"
         },
         {
+            "id":3,
             "name": "Dory",
             "description": "Dory is a blue tang caught in the Atlantic Ocean. She is very sweet, but struggles with memory problems.",
             "price": 5.26,
             "image": "./pets-names/dory.jpg"
         },
         {
+            "id":4,
             "name": "Bread",
             "description": "Dory loves this snack. You can also use this for sandwiches.",
             "price": 2.99,
             "image": "./food/bread.jpg"
         },
         {
+            "id":5,
             "name": "Eggs",
             "description": "Eggs are used year round, perfect for breakfast, baking, or frying. Eggs should be in your fridge year round due to their multiple purposes.",
             "price": 3.99,
             "image": "./food/eggs.jpg"
         },
         {
+            "id":6,
             "name": "Muffin",
             "description": "Eggs are used year round, perfect for breakfast, baking, or frying. Eggs should be in your fridge year round due to their multiple purposes.",
             "price": 0.99,
             "image": "./food/muffin.jpg"
         },
         {
+            "id":7,
             "name": "Cereal",
             "description": "Cereal is a good way to start your day. Milk and cereal commonly go together.",
             "price": 3.59,
