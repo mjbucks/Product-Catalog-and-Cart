@@ -14,6 +14,7 @@ function App(){
     const [cartTotal, setCartTotal] = useState(0);
     const [dataF,setDataF] = useState({});
     const [viewer,setViewer] = useState(0);
+    const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
         total();
@@ -47,6 +48,14 @@ function App(){
         }
         setCart(hardCopy);
     };
+
+    const handleSearchChange = (value) => {
+        setSearchTerm(value);
+    };
+    
+    const filteredProducts = products.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
     
 
     function howManyofThis(id) {
@@ -54,7 +63,7 @@ function App(){
         return hmot.length;
     }
 
-    const listItems = products.map((el) => (
+    const listItems = filteredProducts.map((el) => (
         // PRODUCT
         <div class="row border-top border-bottom" key={el.id}>
             <div class="row main align-items-center">
@@ -182,6 +191,13 @@ function App(){
                 <section className="header-main">
                     <h1 style={{textAlign: "center", paddingTop: "1%"}}>Welcome to Friends and Food </h1>
                     <h3 style={{textAlign:"center"}}>Shop and buy the best friends and food on the market! </h3>
+                    <input
+                        style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(event) => handleSearchChange(event.target.value)}
+                    />
                 </section>
             </div>
         );
