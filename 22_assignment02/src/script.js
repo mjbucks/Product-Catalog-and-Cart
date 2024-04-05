@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "bootstrap/dist/css/bootstrap.css";
 import "./style.css"
+import products from "./data.json"
 
 function App(){
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -49,7 +50,7 @@ function App(){
         return hmot.length;
     }
 
-    const listItems = items.map((el) => (
+    const listItems = products.map((el) => (
         // PRODUCT
         <div class="row border-top border-bottom" key={el.id}>
             <div class="row main align-items-center">
