@@ -5,6 +5,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import "bootstrap/dist/css/bootstrap.css";
+import "./style.css"
 
 function App(){
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -74,8 +75,20 @@ function App(){
         </div>);
     };
 
+    function Header(){
+        return (
+            <div>
+                <section className="header-main">
+                    <h1 style={{textAlign: "center", paddingTop: "1%"}}>Welcome to Friends and Food </h1>
+                    <h3 style={{textAlign:"center"}}>Shop and buy the best friends and food on the market! </h3>
+                </section>
+            </div>
+        );
+    }
+
     return (
         <div>
+        <Header/>
         {viewer === 0 ? <Payment /> : <Summary />}
         </div>
         );
