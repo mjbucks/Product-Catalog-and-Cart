@@ -1,0 +1,28 @@
+{
+    "friends": [
+        {
+        "name": "Shabazz",
+        "description": "Shabazz is the greatest companion one could ask for. He loves to play with you, and will climb a tree faster than you can say \"Lemur\"!",
+        "price": 1450.23,
+        "image": "./pets-names/shabazz.jpg"
+        },
+        {
+            "name": "Patrick",
+            "description": "Patrick is a starfish caught in the shallow reefs near Australia. He is a very social star, and will sometimes wear green pants.",
+            "price": 0.23,
+            "image": "./pets-names/patrick.jpg"
+        },
+        {
+            "name": "Igor",
+            "description": "Igor is an Elephant from the great land of Kenya. He loves to swim, and will show you how if you don't already know!",
+            "price": 82796.99,
+            "image": "./pets-names/igot.jpg"
+        },
+        {
+            "name": "Dory",
+            "description": "Dory is a blue tang caught in the Atlantic Ocean. She is very sweet, but struggles with memory problems.",
+            "price": 5.26,
+            "image": "./pets-names/dory.jpg"
+        }
+    ]
+}
