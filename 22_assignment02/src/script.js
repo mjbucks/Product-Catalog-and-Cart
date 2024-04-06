@@ -130,8 +130,23 @@ function App(){
             setDataF( data );
             setViewer( 2 );
         }
+        const allItems = cart.map((el) => (
+            <div class="row border-top border-bottom" key={el.id}>
+            <div class="row main align-items-center">
+                <div class="col-2">
+                <img class="img-fluid" src={require(`./product-images/${el.image}`)} alt={el.name} />
+                </div>
+                <div class="col">
+                    <div class="row text-muted">{el.name}</div>
+                    <div class="row">{el.description}</div>
+                </div>
+            </div>
+        </div>
+        ));
 
-        return (<div>
+        return (
+                    <div>
+                        <div>{allItems}</div>
                     <form onSubmit={handleSubmit(onSubmit)} className="container mt-5">
                         <div className="form-group">
                             <input {...register("fullName", { required: true })} placeholder="Full Name" className="form-control"/>
