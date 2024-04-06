@@ -44,7 +44,7 @@
     {
         "id":6,
         "name": "Muffin",
-        "description": "Eggs are used year round, perfect for breakfast, baking, or frying. Eggs should be in your fridge year round due to their multiple purposes.",
+        "description": "Muffins are warm, fluffy, and delicious. They work as a nutricious breakfast, or double as a yummy late night snack.",
         "price": 0.99,
         "image": "muffin.jpg"
     },

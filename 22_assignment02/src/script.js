@@ -8,13 +8,20 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./style.css"
 import products from "./data.json"
 
-function App(){
+function App() {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [cart, setCart] = useState([]);
     const [cartTotal, setCartTotal] = useState(0);
-    const [dataF,setDataF] = useState({});
-    const [viewer,setViewer] = useState(0);
+    const [dataF, setDataF] = useState({});
+    const [viewer, setViewer] = useState(0);
     const [searchTerm, setSearchTerm] = useState("");
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
 
     useEffect(() => {
         total();
@@ -43,7 +50,7 @@ function App(){
     const removeFromCart = (el) => {
         let hardCopy = [...cart];
         let poop = hardCopy.lastIndexOf(el);
-        if (poop >= 0){
+        if (poop >= 0) {
             hardCopy.splice(poop, 1);
         }
         setCart(hardCopy);
@@ -52,11 +59,11 @@ function App(){
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };
-    
+
     const filteredProducts = products.filter((product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    
+
 
     function howManyofThis(id) {
         let hmot = cart.filter((cartItem) => cartItem.id === id);
@@ -68,7 +75,7 @@ function App(){
         <div class="row border-top border-bottom" key={el.id}>
             <div class="row main align-items-center">
                 <div class="col-2">
-                <img class="img-fluid" src={require(`./product-images/${el.image}`)} alt={el.name} />
+                    <img class="img-fluid" src={require(`./product-images/${el.image}`)} alt={el.name} />
                 </div>
                 <div class="col">
                     <div class="row text-muted">{el.name}</div>
@@ -83,12 +90,13 @@ function App(){
                 </div>
             </div>
         </div>
-        ));
+    ));
 
-    function Browse(){
+    function Browse() {
         const onSubmit = data => {
-            setDataF( data );
-            setViewer( 1 );
+            scrollToTop();
+            setDataF(data);
+            setViewer(1);
         }
 
 
@@ -96,138 +104,180 @@ function App(){
             <div>
                 <div class="card">
                     <div class="row">
-                    {/* HERE, IT IS THE SHOPING CART */}
+                        {/* HERE, IT IS THE SHOPING CART */}
                         <div class="col-md-8 cart">
                             <div class="title">
                                 <div class="row">
                                     <div class="col">
                                         <h4>
-                                        <b>Products for Sale:</b>
+                                            <b>Products for Sale:</b>
                                         </h4>
                                     </div>
                                     <div class="col align-self-center text-right text-muted">
-                                    Products selected {cart.length}
+                                        Products selected {cart.length}
                                     </div>
                                 </div>
                             </div>
                             <div>{listItems}</div>
-                            </div>
-                            <div class ="float-end">
-                            <p class ="mb-0 me-5 d-flex align-items-center">
-                                <span class ="small text-muted me-2">Order total:</span>
-                                <span class ="lead fw-normal">${cartTotal}</span>
+                        </div>
+                        <div class="float-end">
+                            <p class="mb-0 me-5 d-flex align-items-center">
+                                <span class="small text-muted me-2">Order total:</span>
+                                <span class="lead fw-normal">${cartTotal}</span>
                             </p>
                         </div>
                     </div>
                 </div>
-                <button type="button" className="btn btn-secondary" onClick={() => onSubmit()} > Checkout </button>
+                <div style={{ padding: "1%" }}>
+                    <button type="button" className="btn btn-secondary" onClick={() => onSubmit()} > Checkout </button>
+                </div>
             </div>
         );
     }
 
-    function Cart(){
+    function Cart() {
         const onSubmit = data => {
-            setDataF( data );
-            setViewer( 2 );
+            scrollToTop();
+            setDataF(data);
+            setViewer(2);
         }
 
-const backToBrowse = () =>{
-    setViewer(0);
-}
+        const backToBrowse = () => {
+            scrollToTop();
+            setViewer(0);
+        }
 
-const uniqueItems = Object.values(cart.reduce((acc, el) => {
-    if (!acc[el.id]) {
-        acc[el.id] = {...el, quantity: 0};
-    }
-    acc[el.id].quantity += 1;
-    acc[el.id].price = acc[el.id].quantity * acc[el.id].price;
-    return acc;
-}, {}));
+        const uniqueItems = Object.values(cart.reduce((acc, el) => {
+            if (!acc[el.id]) {
+                acc[el.id] = { ...el, quantity: 0, totalPrice: 0 };
+            }
+            acc[el.id].quantity += 1;
+            acc[el.id].totalPrice += acc[el.id].price;
+            return acc;
+        }, {}));
 
-const allItems = uniqueItems.map((el) => (
-    <div>
-    <div class="row border-top border-bottom" key={el.id} style={{padding: "2%"}}>
-        <div class="row main align-items-center">
-            <div class="col-2">
-                <img class="img-fluid" src={require(`./product-images/${el.image}`)} alt={el.name} />
+        const allItems = uniqueItems.map((el) => (
+            <div>
+                <div class="row border-top border-bottom" key={el.id} style={{ padding: "2%" }}>
+                    <div class="row main align-items-center">
+                        <div class="col-2">
+                            <img class="img-fluid" src={require(`./product-images/${el.image}`)} alt={el.name} />
+                        </div>
+                        <div class="col">
+                            <div class="row text-muted">{el.name}</div>
+                            <div class="row">${el.totalPrice}</div>
+                            <div class="row">Quantity: {el.quantity}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col">
-                <div class="row text-muted">{el.name}</div>
-                <div class="row">${el.price}</div>
-                <div class="row">Quantity: {el.quantity}</div>
-            </div>
-        </div>
-    </div>
-    </div>
-));
+        ));
 
         return (
-                    <div>
-                        <h1 style={{padding:"1%"}}>Cart</h1>
-                        <div>{allItems}</div>
-                    <form onSubmit={handleSubmit(onSubmit)} className="container mt-5">
-                        <div className="form-group">
-                            <input {...register("fullName", { required: true })} placeholder="Full Name" className="form-control"/>
-                            {errors.fullName && <p className="text-danger">Full Name is required.</p>}
-                        </div>
-                        <div className="form-group">
-                        <input {...register("email", { required: true, pattern: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/ })} placeholder="Email" className="form-control"/>
+            <div>
+                <h1 style={{ padding: "1%" }}>Cart</h1>
+                <h3 style={{ padding: "1%" }}>Total Price: ${cartTotal}</h3>
+                <div>{allItems}</div>
+                <form onSubmit={handleSubmit(onSubmit)} className="container mt-5">
+                    <div className="form-group">
+                        <input {...register("fullName", { required: true })} placeholder="Full Name" className="form-control" />
+                        {errors.fullName && <p className="text-danger">Full Name is required.</p>}
+                    </div>
+                    <div className="form-group">
+                        <input {...register("email", { required: true, pattern: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/ })} placeholder="Email" className="form-control" />
                         {errors.email && <p className="text-danger">A valid Email is required.</p>}
-                        </div>
-                        <div className="form-group">
-                        <input {...register("creditCard", { required: true, pattern: /^\d{16}$/ })} placeholder="Credit Card" className="form-control"/>
+                    </div>
+                    <div className="form-group">
+                        <input {...register("creditCard", { required: true, pattern: /^\d{16}$/ })} placeholder="Credit Card" className="form-control" />
                         {errors.creditCard && <p className="text-danger">A valid 16 digit Credit Card number is required.</p>}
-                        </div>
-                        <div className="form-group">
-                            <input {...register("address", { required: true })} placeholder="Address" className="form-control"/>
-                            {errors.address && <p className="text-danger">Address is required.</p>}
-                        </div>
-                        <div className="form-group">
-                            <input {...register("address2")} placeholder="Address 2" className="form-control"/>
-                        </div>
-                        <div className="form-group">
-                            <input {...register("city", { required: true })} placeholder="City" className="form-control"/>
-                            {errors.city && <p className="text-danger">City is required.</p>}
-                        </div>
-                        <div className="form-group">
-                            <input {...register("state", { required: true })} placeholder="State" className="form-control"/>
-                            {errors.state && <p className="text-danger">State is required.</p>}
-                        </div>
-                        <div className="form-group">
-                        <input {...register("zip", { required: true, pattern: /^\d{5}$/ })} placeholder="Zip" className="form-control"/>
+                    </div>
+                    <div className="form-group">
+                        <input {...register("address", { required: true })} placeholder="Address" className="form-control" />
+                        {errors.address && <p className="text-danger">Address is required.</p>}
+                    </div>
+                    <div className="form-group">
+                        <input {...register("address2")} placeholder="Address 2" className="form-control" />
+                    </div>
+                    <div className="form-group">
+                        <input {...register("city", { required: true })} placeholder="City" className="form-control" />
+                        {errors.city && <p className="text-danger">City is required.</p>}
+                    </div>
+                    <div className="form-group">
+                        <input {...register("state", { required: true })} placeholder="State" className="form-control" />
+                        {errors.state && <p className="text-danger">State is required.</p>}
+                    </div>
+                    <div className="form-group">
+                        <input {...register("zip", { required: true, pattern: /^\d{5}$/ })} placeholder="Zip" className="form-control" />
                         {errors.zip && <p className="text-danger">A valid 5 digit Zip code is required.</p>}
-                        </div>
+                    </div>
 
-                        <div style={{padding:"1%"}}>
-                        <button onClick={backToBrowse} className="btn btn-secondary" style={{marginRight: "10px"}}>Back</button>
-                        <button type="submit" className="btn btn-secondary"style={{backgroundColor:"#4b9ec2"}}>Submit</button>
-                        </div>
-                    </form>
-                </div>);
+                    <div style={{ padding: "1%" }}>
+                        <button onClick={backToBrowse} className="btn btn-secondary" style={{ marginRight: "10px" }}>Back</button>
+                        <button type="submit" className="btn btn-secondary" style={{ backgroundColor: "#4b9ec2" }}>Submit</button>
+                    </div>
+                </form>
+            </div>);
     }
 
-    function Summary(){
-        const updateHooks = ()=>{
-            setViewer( 0 );
-            setDataF( {} );
+    function Summary() {
+        const updateHooks = () => {
+            scrollToTop();
+            setViewer(0);
+            setDataF({});
+            setCart([]);
+            setCartTotal(0);
         };
-        
-        return (<div>
-            <h1>Payment summary:</h1>
-            <h3>{dataF.fullName}</h3>
-            <p>{dataF.email}</p>
-            ...
-            <p>{dataF.city},{dataF.state} {dataF.zip} </p>
-            <button onClick={updateHooks} className="btn btn-secondary">Submit</button>
-        </div>);
+
+        const uniqueItems = Object.values(cart.reduce((acc, el) => {
+            if (!acc[el.id]) {
+                acc[el.id] = { ...el, quantity: 0 };
+            }
+            acc[el.id].quantity += 1;
+            return acc;
+        }, {}))
+
+        const paymentSummaryItems = uniqueItems.map((el) => (
+            // PRODUCT
+            <div class="row border-top border-bottom" key={el.id}>
+                <div class="row main align-items-center">
+                    <div class="col-2">
+                        <img class="img-fluid" src={require(`./product-images/${el.image}`)} alt={el.name} />
+                    </div>
+                    <div class="col">
+                        <div class="row text-muted"><b>{el.name}</b></div>
+                        <div class="row"><p>Quantity: {el.quantity}</p></div>
+                        <div class="row"><p>Each priced at: {el.price}</p></div>
+                    </div>
+                </div>
+            </div>
+        ));
+
+        const last4Digits = dataF.creditCard ? dataF.creditCard.slice(-4).padStart(dataF.creditCard.length, '*') : '';
+
+        return (
+            <div>
+                <div style={{ padding: "2%" }}>
+                    <h1>Payment summary:</h1>
+                    <br></br>
+                    <h3>Hello, {dataF.fullName}</h3>
+                    <p>You have spent <b>${cartTotal}</b> on: </p>
+                    {paymentSummaryItems}
+                    <br></br>
+                    <h3>Payment Information: </h3>
+                    <p><b>Email:</b> {dataF.email}</p>
+                    <p><b>Credit card:</b> {last4Digits}</p>
+                    <p><b>Address:</b> {dataF.address} {dataF.city}, {dataF.state} {dataF.zip}</p>
+                    <button onClick={updateHooks} className="btn btn-secondary">Browse More</button>
+                </div>
+            </div>);
     };
 
-    function Header(){
+    function Header() {
         return (
             <div>
                 <section className="header-main">
-                    <h1 style={{textAlign: "center", paddingTop: "1%"}}>Welcome to Friends and Food </h1>
-                    <h3 style={{textAlign:"center"}}>Shop and buy the best friends and food on the market! </h3>
+                    <h1 style={{ textAlign: "center", paddingTop: "1%" }}>Welcome to Friends and Food </h1>
+                    <h3 style={{ textAlign: "center" }}>Shop and buy the best friends and food on the market! </h3>
                     <input
                         key="searchInput"
                         style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto' }}
@@ -243,11 +293,10 @@ const allItems = uniqueItems.map((el) => (
 
     return (
         <div>
-        {Header()}
-        {viewer === 0 ? <Browse/> : viewer === 1 ? Cart() : <Summary />}
+            {Header()}
+            {viewer === 0 ? <Browse /> : viewer === 1 ? Cart() : <Summary />}
         </div>
-        );
+    );
 }
 
 export default App;
-    
