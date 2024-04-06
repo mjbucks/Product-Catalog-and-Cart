@@ -173,15 +173,51 @@ function App(){
         const updateHooks = ()=>{
             setViewer( 0 );
             setDataF( {} );
+            setCart([]);
+            setCartTotal(0);
         };
+
+        const uniqueItems = Object.values(cart.reduce((acc, el) => {
+            if (!acc[el.id]) {
+                acc[el.id] = {...el, quantity: 0};
+            }
+            acc[el.id].quantity += 1;
+            return acc;
+        }, {}))
+
+        const paymentSummaryItems = uniqueItems.map((el) => (
+            // PRODUCT
+            <div class="row border-top border-bottom" key={el.id}>
+                <div class="row main align-items-center">
+                    <div class="col-2">
+                    <img class="img-fluid" src={require(`./product-images/${el.image}`)} alt={el.name} />
+                    </div>
+                    <div class="col">
+                        <div class="row text-muted"><b>{el.name}</b></div>
+                        <div class="row"><p>Quantity: {el.quantity}</p></div>
+                        <div class="row"><p>Each priced at: {el.price}</p></div>
+                    </div>
+                </div>
+            </div>
+            ));
+
+        const last4Digits = dataF.creditCard ? dataF.creditCard.slice(-4).padStart(dataF.creditCard.length, '*') : '';
         
-        return (<div>
+        return (
+        <div>
+            <div style={{padding: "2%"}}>
             <h1>Payment summary:</h1>
-            <h3>{dataF.fullName}</h3>
-            <p>{dataF.email}</p>
-            ...
-            <p>{dataF.city},{dataF.state} {dataF.zip} </p>
-            <button onClick={updateHooks} className="btn btn-secondary">Submit</button>
+            <br></br>
+            <h3>Hello, {dataF.fullName}</h3>
+            <p>You are spending <b>${cartTotal}</b> on: </p>
+            {paymentSummaryItems}
+            <br></br>
+            <h3>Payment Information: </h3>
+            <p><b>Email:</b> {dataF.email}</p>
+            <p><b>Credit card:</b> {last4Digits}</p>
+            <p><b>Address:</b> {dataF.address} {dataF.city}, {dataF.state} {dataF.zip}</p>
+            <button onClick={updateHooks} className="btn btn-secondary">Browse More</button>
+            </div>
         </div>);
     };
 
@@ -207,7 +243,7 @@ function App(){
     return (
         <div>
         {Header()}
-        {viewer === 0 ? <Browse/> : viewer === 1 ? <Cart /> : <Summary />}
+        {viewer === 0 ? <Browse/> : viewer === 1 ? Cart() : <Summary/>}
         </div>
         );
 }
