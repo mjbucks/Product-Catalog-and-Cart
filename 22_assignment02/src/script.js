@@ -130,22 +130,40 @@ function App(){
             setDataF( data );
             setViewer( 2 );
         }
-        const allItems = cart.map((el) => (
-            <div class="row border-top border-bottom" key={el.id}>
-            <div class="row main align-items-center">
-                <div class="col-2">
+
+const backToBrowse = () =>{
+    setViewer(0);
+}
+
+const uniqueItems = Object.values(cart.reduce((acc, el) => {
+    if (!acc[el.id]) {
+        acc[el.id] = {...el, quantity: 0};
+    }
+    acc[el.id].quantity += 1;
+    acc[el.id].price = acc[el.id].quantity * acc[el.id].price;
+    return acc;
+}, {}));
+
+const allItems = uniqueItems.map((el) => (
+    <div>
+    <div class="row border-top border-bottom" key={el.id} style={{padding: "2%"}}>
+        <div class="row main align-items-center">
+            <div class="col-2">
                 <img class="img-fluid" src={require(`./product-images/${el.image}`)} alt={el.name} />
-                </div>
-                <div class="col">
-                    <div class="row text-muted">{el.name}</div>
-                    <div class="row">{el.description}</div>
-                </div>
+            </div>
+            <div class="col">
+                <div class="row text-muted">{el.name}</div>
+                <div class="row">${el.price}</div>
+                <div class="row">Quantity: {el.quantity}</div>
             </div>
         </div>
-        ));
+    </div>
+    </div>
+));
 
         return (
                     <div>
+                        <h1 style={{padding:"1%"}}>Cart</h1>
                         <div>{allItems}</div>
                     <form onSubmit={handleSubmit(onSubmit)} className="container mt-5">
                         <div className="form-group">
@@ -153,12 +171,12 @@ function App(){
                             {errors.fullName && <p className="text-danger">Full Name is required.</p>}
                         </div>
                         <div className="form-group">
-                            <input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} placeholder="Email" className="form-control"/>
-                            {errors.email && <p className="text-danger">Email is required.</p>}
+                        <input {...register("email", { required: true, pattern: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/ })} placeholder="Email" className="form-control"/>
+                        {errors.email && <p className="text-danger">A valid Email is required.</p>}
                         </div>
                         <div className="form-group">
-                            <input {...register("creditCard", { required: true })} placeholder="Credit Card" className="form-control"/>
-                            {errors.creditCard && <p className="text-danger">Credit Card is required.</p>}
+                        <input {...register("creditCard", { required: true, pattern: /^\d{16}$/ })} placeholder="Credit Card" className="form-control"/>
+                        {errors.creditCard && <p className="text-danger">A valid 16 digit Credit Card number is required.</p>}
                         </div>
                         <div className="form-group">
                             <input {...register("address", { required: true })} placeholder="Address" className="form-control"/>
@@ -176,10 +194,14 @@ function App(){
                             {errors.state && <p className="text-danger">State is required.</p>}
                         </div>
                         <div className="form-group">
-                            <input {...register("zip", { required: true })} placeholder="Zip" className="form-control"/>
-                            {errors.zip && <p className="text-danger">Zip is required.</p>}
+                        <input {...register("zip", { required: true, pattern: /^\d{5}$/ })} placeholder="Zip" className="form-control"/>
+                        {errors.zip && <p className="text-danger">A valid 5 digit Zip code is required.</p>}
                         </div>
-                        <button type="submit" className="btn btn-secondary">Submit</button>
+
+                        <div style={{padding:"1%"}}>
+                        <button onClick={backToBrowse} className="btn btn-secondary" style={{marginRight: "10px"}}>Back</button>
+                        <button type="submit" className="btn btn-secondary"style={{backgroundColor:"#4b9ec2"}}>Submit</button>
+                        </div>
                     </form>
                 </div>);
     }
@@ -222,7 +244,7 @@ function App(){
     return (
         <div>
         {Header()}
-        {viewer === 0 ? <Browse/> : viewer === 1 ? <Cart /> : <Summary />}
+        {viewer === 0 ? <Browse/> : viewer === 1 ? Cart() : <Summary />}
         </div>
         );
 }
